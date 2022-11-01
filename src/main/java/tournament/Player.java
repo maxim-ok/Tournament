@@ -2,6 +2,7 @@ package tournament;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Player implements Comparable<Player> {
@@ -61,6 +62,7 @@ public class Player implements Comparable<Player> {
         return name;
 
     }
+
 
 
     @Override

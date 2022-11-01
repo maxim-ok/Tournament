@@ -4,42 +4,34 @@ import java.util.*;
 
 public class Game {
 
-    private List<Player> players = new ArrayList<>();
+    protected Map<String, Player > players = new HashMap<>();
 
 
-    public List<Player> findAllRegPlayers() {
+    public Map<String, Player > findAllRegPlayers() {
         return players;
+
     }
 
     public void registration(Player player) {
-        players.add(player);
+        players.put(player.getName(), player);
     }
 
 
-    public int findPlayerByName(String name) {
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
-            if (player.getName().equals(name)) {
-                return i;
-            }
+    public String findPlayerByName(String name) {
+        if (players.get(name).equals(name)) {
 
-        }
-        return -1;
+        }return name;
     }
+
 
 
     public int round(String name1, String name2) {
 
-        int playerNum1 = findPlayerByName(name1);
-        int playerNum2 = findPlayerByName(name2);
+       Player player1 = players.get(name1);
+       Player player2 = players.get(name2);
 
-
-        if (findPlayerByName(name1) == -1 || findPlayerByName(name2) == -1) {
-            throw new NotFoundException("Игрок с именем " + name1 + " не зарегистрирован на турнире");
-        }
-
-        int strengthPlayer1 = players.get(playerNum1).getStrength();
-        int strengthPlayer2 = players.get(playerNum2).getStrength();
+        int strengthPlayer1 = player1.getStrength();
+        int strengthPlayer2 = player2.getStrength();
 
         if (strengthPlayer1 == strengthPlayer2) {
 
