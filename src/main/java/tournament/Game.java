@@ -4,13 +4,10 @@ import java.util.*;
 
 public class Game {
 
-    private Collection<Player> players;
+    private List<Player> players = new ArrayList<>();
 
-    public Game() {
-        this.players = new ArrayList<>();
-    }
 
-    public Collection<Player> findAllRegPlayers() {
+    public List<Player> findAllRegPlayers() {
         return players;
     }
 
@@ -19,24 +16,40 @@ public class Game {
     }
 
 
-    public Collection<Player> findPlayerByName(String name) {
-        for (Player player : players) {
-            if ((name.equals(player.getName()))) {
+    public int findPlayerByName(String name) {
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            if (player.getName().equals(name)) {
+                return i;
             }
-            return Collections.singleton(player);
+
         }
-        return null;
+        return -1;
     }
 
 
-    public void round(String name1, String name2) {
+    public int round(String name1, String name2) {
 
-        if (findPlayerByName(name1) == null) {
-            throw new NotFoundException("Игрок с именем " + name1 + " не зарегистрирован на туринире");
+        int playerNum1 = findPlayerByName(name1);
+        int playerNum2 = findPlayerByName(name2);
 
-        } else if (findPlayerByName(name2) == null) {
-            throw new NotFoundException("Игрок с именем " + name2 + " не зарегистрирован на туринире");
+
+        if (findPlayerByName(name1) == -1 || findPlayerByName(name2) == -1) {
+            throw new NotFoundException("Игрок с именем " + name1 + " не зарегистрирован на турнире");
         }
+
+        int strengthPlayer1 = players.get(playerNum1).getStrength();
+        int strengthPlayer2 = players.get(playerNum2).getStrength();
+
+        if (strengthPlayer1 == strengthPlayer2) {
+
+            return 0;
+        }
+        if (strengthPlayer1 > strengthPlayer2) {
+            return 1;
+
+        }
+        return 2;
 
 
     }

@@ -17,6 +17,7 @@ public class GameTest {
     Player player2 = new Player(2, "Thor", 5);
     Player player3 = new Player(3, "Thanos", 10);
     Player player4 = new Player(4, "CapAmerica", 5);
+    Player player5 = new Player(5, "Superman", 5);
 
     @Test
     public void shouldFindAllRegPlayers() {
@@ -25,11 +26,13 @@ public class GameTest {
         game.registration(player2);
         game.registration(player3);
         game.registration(player4);
+        game.registration(player5);
+
 
         game.findAllRegPlayers();
 
-        Collection<Player> actual = game.findAllRegPlayers();
-        Player[] expected = {player1, player2, player3, player4};
+        List<Player> actual = game.findAllRegPlayers();
+        Player[] expected = {player1, player2, player3, player4, player5};
 
         System.out.println(actual.toString());
         System.out.println(Arrays.toString(expected));
@@ -45,16 +48,98 @@ public class GameTest {
         game.registration(player2);
         game.registration(player3);
         game.registration(player4);
+        game.registration(player5);
 
         game.findPlayerByName("Hulk");
 
-        Collection<Player> actual = game.findPlayerByName("Hulk");
-        Player[] expected = {player1};
+        int actual = game.findPlayerByName("Hulk");
+        int expected = 0;
 
-        System.out.println(actual.toString());
-        System.out.println(Arrays.toString(expected));
+        assertEquals(expected, actual);
+    }
 
-        assertArrayEquals(expected, actual.toArray());
+
+    @Test
+    public void shouldReturnWinner1() {
+
+        game.registration(player1);
+        game.registration(player2);
+        game.registration(player3);
+        game.registration(player4);
+        game.registration(player5);
+
+        game.round("Thanos", "Thor");
+
+        int actual = game.round("Thanos", "Thor");
+        int expected = 1;
+
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldReturnWinner2() {
+
+        game.registration(player1);
+        game.registration(player2);
+        game.registration(player3);
+        game.registration(player4);
+        game.registration(player5);
+
+        game.round("Thor", "Thanos");
+
+        int actual = game.round("Thor", "Thanos");
+        int expected = 2;
+
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldReturnDraw() {
+
+        game.registration(player1);
+        game.registration(player2);
+        game.registration(player3);
+        game.registration(player4);
+        game.registration(player5);
+
+        game.round("Superman", "Thor");
+
+        int actual = game.round("Superman", "Thor");
+        int expected = 0;
+
+        assertEquals(expected, actual);
+
+    }
+
+
+    @Test
+    public void shouldReturnException1() {
+
+        game.registration(player1);
+        game.registration(player2);
+        game.registration(player3);
+        game.registration(player4);
+        game.registration(player5);
+
+        assertThrows(NotFoundException.class, () -> {
+            game.round("TonyStark", "Thor");
+        });
+    }
+
+    @Test
+    public void shouldReturnException2() {
+
+        game.registration(player1);
+        game.registration(player2);
+        game.registration(player3);
+        game.registration(player4);
+        game.registration(player5);
+
+        assertThrows(NotFoundException.class, () -> {
+            game.round("Thor", "TonyStark");
+        });
     }
 
 
